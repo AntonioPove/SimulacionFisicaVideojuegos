@@ -1,7 +1,9 @@
 #include "Particle.h"
 
-Particle::Particle(Vector3 pos_, Vector3 vel_, double size_) : pos(pos_)
+Particle::Particle(Vector3 pos_, Vector3 vel_, double size_, Vector3 a_, double d_) : pos(pos_)
 {
+	a = a_;
+	d = d_;
 	size = size_;
 	vel = vel_;
 
@@ -17,5 +19,6 @@ Particle::~Particle()
 bool Particle::integrate(double t)
 {
 	pos.p += vel * t;
+	vel = (vel * pow(d, t)) + (a * t);
 	return true;
 }
