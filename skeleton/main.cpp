@@ -41,6 +41,7 @@ Proyectil* proyectil = NULL;
 std::vector<Proyectil*> particles;
 
 RenderItem* ground = NULL;
+RenderItem* diana = NULL;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -69,6 +70,9 @@ void initPhysics(bool interactive)
 	//particle = new Particle({ 0, 10, 0 }, { 0, 10, 0 }, 6, {0, -2, 0}, 0.99);
 	ground = new RenderItem(CreateShape(PxBoxGeometry(100, 1, 100)),
 		new PxTransform(0, -5, 20), { 1,1,1,1 });
+
+	diana = new RenderItem(CreateShape(PxBoxGeometry(10, 10, 10)),
+		new PxTransform(10, 100, 10), { 1,0.5,0.5,1 });
 
 	}
 
