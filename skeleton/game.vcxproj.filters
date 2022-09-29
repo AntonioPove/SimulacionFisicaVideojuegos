@@ -13,6 +13,7 @@
     <ClCompile Include="Particle.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
+    <ClCompile Include="Proyectil.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -27,6 +28,7 @@
     <ClInclude Include="Particle.h">
       <Filter>Entity</Filter>
     </ClInclude>
+    <ClInclude Include="Proyectil.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

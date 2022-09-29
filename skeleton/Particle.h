@@ -10,7 +10,7 @@ public:
 		Vector3 a_, double d_);
 	~Particle();
 
-	bool integrate(double t);
+	virtual bool integrate(double t);
 
 protected:
 	physx:: PxTransform pos;

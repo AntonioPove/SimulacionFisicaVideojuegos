@@ -8,7 +8,7 @@ Particle::Particle(Vector3 pos_, Vector3 vel_, double size_, Vector3 a_, double 
 	vel = vel_;
 
 	renderItem = new RenderItem(CreateShape(physx::PxSphereGeometry(size)),
-		&pos, {0.3, 0.5, 0.5, 1});
+		&pos, {1, 0.5, 0.5, 1});
 }
 
 Particle::~Particle()

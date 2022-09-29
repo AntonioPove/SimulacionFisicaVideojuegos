@@ -9,8 +9,12 @@
 #include "callbacks.hpp"
 
 #include "Particle.h"
+#include "Proyectil.h"
+
+
 
 #include <iostream>
+#include <vector>
 
 
 
@@ -32,6 +36,11 @@ PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
 Particle* particle = NULL;
+Proyectil* proyectil = NULL;
+
+std::vector<Proyectil*> particles;
+
+RenderItem* ground = NULL;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -57,7 +66,10 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-	particle = new Particle({ 0, 10, 0 }, { 0, 10, 0 }, 6, {0, -2, 0}, 0.99);
+	//particle = new Particle({ 0, 10, 0 }, { 0, 10, 0 }, 6, {0, -2, 0}, 0.99);
+	ground = new RenderItem(CreateShape(PxBoxGeometry(100, 1, 100)),
+		new PxTransform(0, -5, 20), { 1,1,1,1 });
+
 	}
 
 
@@ -71,7 +83,12 @@ void stepPhysics(bool interactive, double t)
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 
-	particle->integrate(t);
+	//particle->integrate(t);
+	for (int i = 0; i < particles.size(); i++)
+	{
+		particles[i]->integrate(t);
+
+	}
 }
 
 // Function to clean data
@@ -101,8 +118,9 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 	//case 'B': break;
 	//case ' ':	break;
-	case ' ':
+	case 'B':
 	{
+		particles.push_back(new Proyectil(GetCamera()->getEye(), 200, 3, 20));
 		break;
 	}
 	default:
