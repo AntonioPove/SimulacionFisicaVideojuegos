@@ -11,7 +11,8 @@
 #include "Particle.h"
 #include "Proyectil.h"
 
-
+#include "ParticleSystem.h"
+#include "ParticleGenerator.h"
 
 #include <iostream>
 #include <vector>
@@ -43,6 +44,9 @@ std::vector<Proyectil*> particles;
 RenderItem* ground = NULL;
 RenderItem* diana = NULL;
 
+ParticleSystem* ps;
+GaussianParticleGenerator* pg;
+
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -67,12 +71,16 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-	//particle = new Particle({ 0, 10, 0 }, { 0, 10, 0 }, 6, {0, -2, 0}, 0.99);
-	ground = new RenderItem(CreateShape(PxBoxGeometry(100, 1, 100)),
-		new PxTransform(0, -5, 20), { 1,1,1,1 });
+	ps = new ParticleSystem();
 
-	diana = new RenderItem(CreateShape(PxBoxGeometry(10, 10, 10)),
-		new PxTransform(10, 100, 10), { 1,0.5,0.5,1 });
+
+	
+	//particle = new Particle({ 0, 10, 0 }, { 0, 10, 0 }, 6, {0, -2, 0}, 0.99);
+	//ground = new RenderItem(CreateShape(PxBoxGeometry(100, 1, 100)),
+	//	new PxTransform(0, -5, 20), { 1,1,1,1 });
+
+	//diana = new RenderItem(CreateShape(PxBoxGeometry(10, 10, 10)),
+	//	new PxTransform(10, 100, 10), { 1,0.5,0.5,1 });
 
 	}
 
@@ -87,12 +95,14 @@ void stepPhysics(bool interactive, double t)
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 
-	//particle->integrate(t);
-	for (int i = 0; i < particles.size(); i++)
-	{
-		particles[i]->integrate(t);
+	////particle->integrate(t);
+	//for (int i = 0; i < particles.size(); i++)
+	//{
+	//	particles[i]->integrate(t);
 
-	}
+	//}
+
+	ps->update(t);
 }
 
 // Function to clean data
@@ -111,7 +121,11 @@ void cleanupPhysics(bool interactive)
 	transport->release();
 	
 	gFoundation->release();
+
+	delete ps;
 	}
+
+
 
 // Function called when a key is pressed
 void keyPress(unsigned char key, const PxTransform& camera)
@@ -124,8 +138,42 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	//case ' ':	break;
 	case 'B':
 	{
-		particles.push_back(new Proyectil(GetCamera()->getEye(), 200, 3, 20));
+		//particles.push_back(new Proyectil(GetCamera()->getEye(), 200, 3, 20, 10000));
 		break;
+	}
+	case 'G':
+	{
+		ps->addParticleGenerator(ParticleSystem::Gau, { 10, 10, 10 }, { 1, 1, 0 }, 4);
+		break;
+	}
+	case 'U':
+	{
+		ps->addParticleGenerator(ParticleSystem::Uni, { 1, 1, 1 }, { 0, 10, 0 }, 4);
+		break;
+	}
+	case 'L':
+	{
+		ps->addParticleGenerator(ParticleSystem::Uni, { 10, 50, 10 }, { 0, 0, 0 }, 1);
+		break;
+	}
+	case '1':
+	{
+		ps->createFireworkSystem(1);
+		break;
+	}
+	case '2':
+	{
+		ps->createFireworkSystem(2);
+		break;
+	}
+	case '3':
+	{
+		ps->createFireworkSystem(3);
+		break;
+	}
+	case 'Q':
+	{
+		ps->destroy();
 	}
 	default:
 		break;
