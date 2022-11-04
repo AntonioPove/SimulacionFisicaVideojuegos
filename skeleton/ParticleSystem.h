@@ -5,6 +5,10 @@
 #include "UniformParticleGenerator.h"
 #include "CircleGenerator.h"
 #include "Firework.h"
+
+#include "ParticleForceRegistry.h"
+#include "GravityForceGenerator.h"
+
 #include <list>
 #include <string>
 #include <memory>
@@ -35,6 +39,8 @@ protected:
 	std::list<ParticleGenerator*> _particles_generator;
 	std::list<Particle*> _particles;
 
+	Particle* p1;
+
 	Particle* fountainParticle;
 	Particle* fountainParticle1;
 	Particle* fireworkP;
@@ -43,6 +49,9 @@ protected:
 
 	Vector3 devTip_pos_Gau;
 	Vector3 devTip_vel_Gau;
+
+	ParticleForceRegistry* pfr;
+	GravityForceGenerator* gfg;
 
 };
 
