@@ -8,6 +8,10 @@
 
 #include "ParticleForceRegistry.h"
 #include "GravityForceGenerator.h"
+#include "DragGenerator.h"
+#include "UniformWindGenerator.h"
+#include "Hurricane.h"
+#include "Explosion.h"
 
 #include <list>
 #include <string>
@@ -52,6 +56,11 @@ protected:
 
 	ParticleForceRegistry* pfr;
 	GravityForceGenerator* gfg;
+	DragGenerator* dg;
+	UniformWindGenerator* upg;
+	Hurricane* hurr;
+
+	Explosion* expl;
 
 };
 
