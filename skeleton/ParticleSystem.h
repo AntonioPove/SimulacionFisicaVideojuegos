@@ -35,6 +35,9 @@ public:
 	std::list<Particle*> getParticleVector() { return _particles; };
 
 	void destroy();
+
+
+	void testForces(int key);
 	
 
 
@@ -61,6 +64,7 @@ protected:
 	Hurricane* hurr;
 
 	Explosion* expl;
+	bool exp = false;
 
 };
 

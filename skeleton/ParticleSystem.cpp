@@ -5,41 +5,7 @@ ParticleSystem::ParticleSystem()
 {
 	//Fuerzas Gravedad
 	pfr = new ParticleForceRegistry();
-	//p1 = new Particle({ 0 ,30, 0 }, { 0, 0, 0 }, 10, { 0, 0, 0 }, 10, 1, { 1, 1, 1 });
-	//p1->setMass(40);
-	//gfg = new GravityForceGenerator({0, -9.8, 0});
-	//_particles.push_back(p1);
-	//pfr->addRegistry(gfg, p1);
-
-	//Fuerza viento
-	/*auto p2 = new Particle({ 0 ,30, 0 }, { 20, 0, 20 }, 5, { 0, 0, 0 }, 0.99, 50, { 1, 0, 1 });
-	p2->setMass(40);
-	dg = new DragGenerator(0.01, 0.02);
-	_particles.push_back(p2);
-	pfr->addRegistry(dg, p2);*/
-
-	//Fuerza uniforme viento
-	/*auto p3 = new Particle({ 10 , 10, 10 }, { 0, 0, 0 }, 5, { 0, 0, 0 }, 0.2, 50, { 0, 0, 1 });
-	p3->setMass(40);
-	upg = new UniformWindGenerator(0.01, 0.02, { 0, -100, 0 }, 0, 0, 0, 40);
-	_particles.push_back(p3);
-	pfr->addRegistry(upg, p3);*/
-
-	//Fuerza del huracan
-	//auto p4 = new Particle({ 10 , 10, 10 }, { 0, 0, 0 }, 5, { 0, 0, 0 }, 0.2, 50, { 0, 0, 1 });
-	//p4->setMass(20);
-	//hurr = new Hurricane(5, { 0, 0, 0 }, 0, 0, 0, 30);
-	//_particles.push_back(p4);
-	//pfr->addRegistry(hurr, p4);
-
-	//Explosion
-	//auto p4 = new Particle({ 10 , 10, 10 }, { 0, 0, 0 }, 5, { 0, 0, 0 }, 0.2, 50, { 0, 0, 1 });
-	//p4->setMass(20);
-	//hurr = new Hurricane(5, { 0, 0, 0 }, 0, 0, 0, 30);
-	//_particles.push_back(p4);
-	//pfr->addRegistry(hurr, p4);
-
-
+	
 	//Particulas gausiano/uniforme y firework
 	fountainParticle = new Particle({ 0 ,0, 0 }, { 0, 0, 0 }, 0.8, { 0, -2, 0 }, 0.99, 1, { 1, 0, 1 });
 	fountainParticle1 = new Particle({ 0 ,0, 0 }, { 0, 100, 0 }, 0.8, { 0, -2, 0 }, 0.99, 5, { 0, 1, 1 });
@@ -60,6 +26,8 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::update(double t)
 {
+	if (exp) expl->updateConst(t);
+
 	pfr->updateForces(t);
 
 	auto i = _particles.begin();
@@ -156,5 +124,64 @@ void ParticleSystem::destroy()
 		g = nullptr;
 	}
 	_particles_generator.clear();
+}
+
+void ParticleSystem::testForces(int key)
+{
+	Particle* p;
+
+	switch (key)
+	{
+	case 5:
+		p = new Particle({ 0 ,30, 0 }, { 0, 0, 0 }, 10, { 0, 0, 0 }, 10, 1, { 1, 1, 1 });
+		p->setMass(40);
+		gfg = new GravityForceGenerator({0, -9.8, 0});
+		_particles.push_back(p);
+		pfr->addRegistry(gfg, p);
+		break;
+	case 6:
+		p = new Particle({ 0 ,30, 0 }, { 20, 0, 20 }, 5, { 0, 0, 0 }, 0.99, 50, { 1, 0, 1 });
+		p->setMass(40);
+		dg = new DragGenerator(0.01, 0.02);
+		_particles.push_back(p);
+		pfr->addRegistry(dg, p);
+		break;
+	case 7:
+		p = new Particle({ 10 , 10, 10 }, { 0, 0, 0 }, 5, { 0, 0, 0 }, 0.2, 50, { 0, 0, 1 });
+		p->setMass(40);
+		upg = new UniformWindGenerator(0.01, 0.02, { 0, -100, 0 }, 0, 0, 0, 40);
+		_particles.push_back(p);
+		pfr->addRegistry(upg, p);
+		break;
+	case 8:
+		p = new Particle({ 10 , 10, 10 }, { 0, 0, 0 }, 5, { 0, 0, 0 }, 0.2, 50, { 0, 0, 1 });
+		p->setMass(20);
+		hurr = new Hurricane(5, { 0, 0, 0 }, 0, 0, 0, 30);
+		_particles.push_back(p);
+		pfr->addRegistry(hurr, p);
+		break;
+	case 9:
+
+		for (int i = 0; i < 20; ++i) {
+
+			std::default_random_engine rnd{ std::random_device{}() };
+			std::uniform_real_distribution<float> interval(-20, 20);
+			p = new Particle({ interval(rnd), interval(rnd), interval(rnd)}, { 0, 0, 0 }, 1, { 0, 0, 0 }, 0.2, 50, { 0, 0, 1 });
+	
+			_particles.push_back(p);
+		}
+		break;
+	case 0:
+		expl = new Explosion(100.0, 250, 10, 10, 10);
+		exp = true;
+
+		for (auto part : _particles) {
+			pfr->addRegistry(expl, part);
+		}
+		break;
+	default:
+		break;
+	}
+
 }
 

@@ -11,6 +11,8 @@ public:
 
 	virtual void updateForce(Particle* particle, double t);
 
+	void updateConst(double t) { w_ += t; };
+
 protected:
 
 	const double e_ = 2.71828182846;

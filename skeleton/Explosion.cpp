@@ -14,13 +14,11 @@ Explosion::Explosion(int R, int k, int ax, int ay, int az) :ForceGenerator()
 
 void Explosion::updateForce(Particle* particle, double t)
 {
-
 	if (fabs(particle->getInverseMass() < 1e-10)) return;
 
 	auto p = particle->pos.p;
 	Vector3 f;
 
-	w_ += t;
 	
 	r_ = sqrt(pow((p.x - ax_), 2) + pow((p.y - ay_), 2) + pow((p.z - az_), 2));
 
@@ -38,11 +36,12 @@ void Explosion::updateForce(Particle* particle, double t)
 		f = { 0, 0, 0 };
 	}
 
-	Vector3 v = f;
+	Vector3 v = particle->vel - f;
 	float drag_coef = v.normalize();
 	Vector3 dragF;
 	drag_coef = (k_ * drag_coef) + k_ * drag_coef * drag_coef;
 	dragF = -v * drag_coef;
+
 
 	particle->addForce(dragF);
 }

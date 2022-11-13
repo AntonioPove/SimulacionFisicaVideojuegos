@@ -175,6 +175,36 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 		ps->destroy();
 	}
+	case '5':
+	{
+		ps->testForces(5);
+		break;
+	}
+	case '6':
+	{
+		ps->testForces(6);
+		break;
+	}
+	case '7':
+	{
+		ps->testForces(7);
+		break;
+	}
+	case '8':
+	{
+		ps->testForces(8);
+		break;
+	}
+	case '9':
+	{
+		ps->testForces(9);
+		break;
+	}
+	case '0':
+	{
+		ps->testForces(0);
+		break;
+	}
 	default:
 		break;
 	}
