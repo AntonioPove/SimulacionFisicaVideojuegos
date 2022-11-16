@@ -154,25 +154,26 @@ void ParticleSystem::testForces(int key)
 		pfr->addRegistry(upg, p);
 		break;
 	case 8:
-		p = new Particle({ 10 , 10, 10 }, { 0, 0, 0 }, 5, { 0, 0, 0 }, 0.2, 50, { 0, 0, 1 });
-		p->setMass(20);
+		
 		hurr = new Hurricane(5, { 0, 0, 0 }, 0, 0, 0, 30);
-		_particles.push_back(p);
-		pfr->addRegistry(hurr, p);
+
+		for (auto part : _particles) {
+			pfr->addRegistry(hurr, part);
+		}
 		break;
 	case 9:
 
 		for (int i = 0; i < 20; ++i) {
 
 			std::default_random_engine rnd{ std::random_device{}() };
-			std::uniform_real_distribution<float> interval(-20, 20);
+			std::uniform_real_distribution<float> interval(-30, 30);
 			p = new Particle({ interval(rnd), interval(rnd), interval(rnd)}, { 0, 0, 0 }, 1, { 0, 0, 0 }, 0.2, 50, { 0, 0, 1 });
 	
 			_particles.push_back(p);
 		}
 		break;
 	case 0:
-		expl = new Explosion(100.0, 250, 10, 10, 10);
+		expl = new Explosion(100.0, 200, 10, 10, 10);
 		exp = true;
 
 		for (auto part : _particles) {

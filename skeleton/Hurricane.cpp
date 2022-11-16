@@ -12,9 +12,9 @@ Hurricane::Hurricane(float k, Vector3 air, int ax, int ay, int az, int range) :
 
 void Hurricane::updateForce(Particle* particle, double t)
 {
-	if (fabs(particle->getInverseMass() < 1e-10)) return;
+    auto p = particle->pos.p;
 
-	auto p = particle->pos.p;
+    if (fabs(particle->getInverseMass() < 1e-10)) return;
 
     Vector3 airDir = k_ * Vector3(
         -(p.z - az_),
@@ -28,7 +28,5 @@ void Hurricane::updateForce(Particle* particle, double t)
     drag_coef = (_k1 * drag_coef) + _k1 * drag_coef * drag_coef;
     dragF = -v * drag_coef;
 
-
     particle->addForce(dragF);
-
 }
