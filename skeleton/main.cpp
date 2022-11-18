@@ -205,6 +205,21 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		ps->testForces(0);
 		break;
 	}
+	case 'M':
+	{
+		ps->generateSpringDemo();
+		break;
+	}	
+	case 'N':
+	{
+		ps->generateSpringDemo2();
+		break;
+	}
+	case 'Y':
+	{
+		ps->slinky();
+		break;
+	}
 	default:
 		break;
 	}

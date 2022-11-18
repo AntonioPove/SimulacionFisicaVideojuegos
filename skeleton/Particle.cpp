@@ -1,7 +1,7 @@
 #include "Particle.h"
 
 Particle::Particle(Vector3 pos_, Vector3 vel_, double size_, Vector3 a_, double d_
-, double deathTime, Vector3 _rgb) : pos(pos_), dTime(deathTime)
+, double deathTime, Vector3 _rgb, bool square) : pos(pos_), dTime(deathTime)
 {
 	a = a_;
 	d = d_;
@@ -13,7 +13,10 @@ Particle::Particle(Vector3 pos_, Vector3 vel_, double size_, Vector3 a_, double 
 	vel = vel_;
 	rgb = _rgb;
 
+	if(!square)
 	renderItem = new RenderItem(CreateShape(physx::PxSphereGeometry(size)),&pos, {rgb.x, rgb.y, rgb.z, 1});
+	else
+	renderItem = new RenderItem(CreateShape(physx::PxBoxGeometry(size, size, size)), &pos, {rgb.x, rgb.y, rgb.z, 1});
 }
 
 Particle::~Particle()

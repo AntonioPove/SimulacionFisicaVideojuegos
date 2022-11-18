@@ -27,6 +27,7 @@
     <ClCompile Include="UniformWindGenerator.cpp" />
     <ClCompile Include="Hurricane.cpp" />
     <ClCompile Include="Explosion.cpp" />
+    <ClCompile Include="SpringForceGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -55,6 +56,7 @@
     <ClInclude Include="UniformWindGenerator.h" />
     <ClInclude Include="Hurricane.h" />
     <ClInclude Include="Explosion.h" />
+    <ClInclude Include="SpringForceGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

@@ -167,7 +167,7 @@ void ParticleSystem::testForces(int key)
 
 			std::default_random_engine rnd{ std::random_device{}() };
 			std::uniform_real_distribution<float> interval(-30, 30);
-			p = new Particle({ interval(rnd), interval(rnd), interval(rnd)}, { 0, 0, 0 }, 1, { 0, 0, 0 }, 0.2, 50, { 0, 0, 1 });
+			p = new Particle({ interval(rnd), interval(rnd), interval(rnd)}, { 0, 0, 0 }, 1, { 0, 0, 0 }, 0.2, 50, { 0, 0, 1 }, true);
 	
 			_particles.push_back(p);
 		}
@@ -184,5 +184,87 @@ void ParticleSystem::testForces(int key)
 		break;
 	}
 
+}
+
+void ParticleSystem::generateSpringDemo()
+{
+	Particle* p1 = new Particle({ 0 ,10, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.99, 100, { 1, 0, 1 });
+	Particle* p2 = new Particle({ 0 ,10, 0 }, { 0, 0, 0 },2, { 0, 0, 0 }, 0.99, 100, { 0.6, 0, 1 }, true);
+	p2->setMass(2.0);
+
+	GravityForceGenerator* g = new GravityForceGenerator({ 0, -2, 0 });
+
+	spring1 = new SpringForceGenerator(5, 10, p2);
+	
+	pfr->addRegistry(spring1, p1);
+	pfr->addRegistry(g, p1);
+
+	_particles.push_back(p1);
+	_particles.push_back(p2);
+
+
+}
+
+void ParticleSystem::generateSpringDemo2()
+{
+	Particle* p1 = new Particle({ -20 ,10, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.99, 100, { 1, 0, 1 });
+	Particle* p2 = new Particle({ 20 ,10, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.99, 100, { 0.6, 0, 1 }, true);
+	p2->setMass(2.0);
+	p1->setMass(2.0);
+
+	SpringForceGenerator* s1 = new SpringForceGenerator(1, 20, p2);
+	pfr->addRegistry(s1, p1);
+
+	SpringForceGenerator* s2 = new SpringForceGenerator(1, 20, p1);
+	pfr->addRegistry(s2, p2);
+
+	_particles.push_back(p1);
+	_particles.push_back(p2);
+}
+
+void ParticleSystem::slinky()
+{
+	Particle* p = new Particle({ 0 , 0, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.99, 100, { 1, 0, 1 }, true);
+	_particles.push_back(p);
+
+	Particle* p1 = new Particle({ 0 , -10, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.99, 100, { 0.6, 0, 1 });
+	_particles.push_back(p1);
+
+	Particle* p2 = new Particle({ 0 , -20, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.99, 100, { 0.6, 0, 1 });
+	_particles.push_back(p2);
+
+	//Particle* p3 = new Particle({ 0 , 0, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.99, 100, { 1, 0, 1 });
+	//_particles.push_back(p3);
+
+	//Particle* p4 = new Particle({ 0 , 0, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.99, 100, { 0.6, 0, 1 });
+	//_particles.push_back(p4);
+
+	//Particle* p5 = new Particle({ 0 , 0, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.99, 100, { 1, 0, 1 });
+	//_particles.push_back(p5);
+
+	//Particle* p6 = new Particle({ 0 , 0, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.99, 100, { 0.6, 0, 1 });
+	//_particles.push_back(p6);
+
+	SpringForceGenerator* s1 = new SpringForceGenerator(1, 20, p);
+	pfr->addRegistry(s1, p1);
+	SpringForceGenerator* s2 = new SpringForceGenerator(1, 10, p1);
+	pfr->addRegistry(s2, p2);
+	//SpringForceGenerator* s3 = new SpringForceGenerator(1, 20, p3);
+	//pfr->addRegistry(s3, p2);
+	//SpringForceGenerator* s4 = new SpringForceGenerator(1, 20, p4);
+	//pfr->addRegistry(s4, p3);
+	//SpringForceGenerator* s5 = new SpringForceGenerator(1, 20, p5);
+	//pfr->addRegistry(s5, p4);
+	//SpringForceGenerator* s6 = new SpringForceGenerator(1, 20, p6);
+	//pfr->addRegistry(s6, p5);*/
+	//
+	GravityForceGenerator* g = new GravityForceGenerator({ 0, -1, 0 });
+	pfr->addRegistry(g, p1);
+	pfr->addRegistry(g, p2);
+	////pfr->addRegistry(g, p3);
+	////pfr->addRegistry(g, p4);
+	////pfr->addRegistry(g, p5);
+	////pfr->addRegistry(g, p6);
+	
 }
 

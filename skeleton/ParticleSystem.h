@@ -13,6 +13,8 @@
 #include "Hurricane.h"
 #include "Explosion.h"
 
+#include "SpringForceGenerator.h"
+
 #include <list>
 #include <string>
 #include <memory>
@@ -39,6 +41,11 @@ public:
 
 	void testForces(int key);
 	
+	void generateSpringDemo();
+
+	void generateSpringDemo2();
+	
+	void slinky();
 
 
 protected:
@@ -65,6 +72,11 @@ protected:
 
 	Explosion* expl;
 	bool exp = false;
+
+	//Parte 1
+	SpringForceGenerator* spring1;
+
+
 
 };
 
