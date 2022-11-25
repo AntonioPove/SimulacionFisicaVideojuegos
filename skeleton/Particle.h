@@ -7,7 +7,7 @@ class Particle
 {
 public:
 	Particle(Vector3 pos_, Vector3 Vel_, double size_, 
-		Vector3 a_, double d_, double deathTime, Vector3 rgb, bool square = false);
+		Vector3 a_, double d_, double deathTime, Vector3 rgb, int type = 0);
 	~Particle();
 
 	virtual bool integrate(double t);
@@ -26,6 +26,9 @@ public:
 	const float getMass() { return mass_; };
 	const float getInverseMass() { return inverse_mass; };
 
+	void changeSemiImplicit() { semiImplict = !semiImplict; };
+
+
 protected:
 	RenderItem* renderItem;
 
@@ -42,5 +45,8 @@ protected:
 	
 	float inverse_mass;
 	float mass_;
+
+
+	bool semiImplict = true;
 };
 

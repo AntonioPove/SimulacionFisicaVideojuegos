@@ -1,7 +1,7 @@
 #include "Particle.h"
 
 Particle::Particle(Vector3 pos_, Vector3 vel_, double size_, Vector3 a_, double d_
-, double deathTime, Vector3 _rgb, bool square) : pos(pos_), dTime(deathTime)
+, double deathTime, Vector3 _rgb, int type) : pos(pos_), dTime(deathTime)
 {
 	a = a_;
 	d = d_;
@@ -13,10 +13,12 @@ Particle::Particle(Vector3 pos_, Vector3 vel_, double size_, Vector3 a_, double 
 	vel = vel_;
 	rgb = _rgb;
 
-	if(!square)
+	if(type == 0)
 	renderItem = new RenderItem(CreateShape(physx::PxSphereGeometry(size)),&pos, {rgb.x, rgb.y, rgb.z, 1});
-	else
+	else if(type == 1)
 	renderItem = new RenderItem(CreateShape(physx::PxBoxGeometry(size, size, size)), &pos, {rgb.x, rgb.y, rgb.z, 1});
+	else if(type == 2)
+	renderItem = new RenderItem(CreateShape(physx::PxBoxGeometry(100, 1, 100)), &pos, { rgb.x, rgb.y, rgb.z, 1 });
 }
 
 Particle::~Particle()
@@ -33,12 +35,19 @@ bool Particle::integrate(double t)
 
 	iniTime += t;
 
+	if(!semiImplict)
 	pos.p += vel * t;
+
+
 	Vector3 accTotal = a;
 	accTotal += force * inverse_mass;
 
 	vel += accTotal * t;
 	vel *= powf(d, t);
+
+
+	if (semiImplict)
+		pos.p += vel * t;
 
 	if (iniTime > dTime) 
 		return false;

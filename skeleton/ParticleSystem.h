@@ -15,6 +15,8 @@
 
 #include "SpringForceGenerator.h"
 
+#include "BuoyancyForceGenerator.h"
+
 #include <list>
 #include <string>
 #include <memory>
@@ -47,6 +49,7 @@ public:
 	
 	void slinky();
 
+	void BuoynacyTest();
 
 protected:
 
@@ -76,7 +79,6 @@ protected:
 	//Parte 1
 	SpringForceGenerator* spring1;
 
-
-
+	BuoyancyForceGenerator* buoyancy;
 };
 

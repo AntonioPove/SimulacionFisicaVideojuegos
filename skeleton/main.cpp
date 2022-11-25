@@ -220,6 +220,11 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		ps->slinky();
 		break;
 	}
+	case 'R':
+	{
+		ps->BuoynacyTest();
+		break;
+	}
 	default:
 		break;
 	}
