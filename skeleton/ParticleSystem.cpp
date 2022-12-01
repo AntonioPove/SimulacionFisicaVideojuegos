@@ -225,48 +225,45 @@ void ParticleSystem::generateSpringDemo2()
 
 void ParticleSystem::slinky()
 {
-	Particle* p = new Particle({ 0 , 0, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.99, 100, { 1, 0, 1 }, 1);
-	_particles.push_back(p);
 
-	Particle* p1 = new Particle({ 0 , -10, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.8, 100, { 0.6, 0, 1 });
+	GravityForceGenerator* g = new GravityForceGenerator({ 0, -2, 0 });
+
+	
+	Particle* p = new Particle({ 0 , 65, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.99, 100, { 1, 0, 1 }, 1);
+	//_particles.push_back(p);
+	Particle* p1 = new Particle({ 0 , 60, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.8, 100, { 0.6, 0, 1 });
 	_particles.push_back(p1);
-
-	Particle* p2 = new Particle({ 0 , -20, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.8, 100, { 0.6, 0, 1 });
+	Particle* p2 = new Particle({ 0 , 55, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.8, 100, { 0.6, 0, 1 });
 	_particles.push_back(p2);
-
-	Particle* p3 = new Particle({ 0 , -30, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.8, 100, { 1, 0, 1 });
+	Particle* p3 = new Particle({ 0 , 50, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.8, 100, { 1, 0, 1 });
 	_particles.push_back(p3);
-
-	Particle* p4 = new Particle({ 0 , -40, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.8, 100, { 0.6, 0, 1 });
+	Particle* p4 = new Particle({ 0 , 45, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.8, 100, { 0.6, 0, 1 });
 	_particles.push_back(p4);
-
-	Particle* p5 = new Particle({ 0 , -50, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.8, 100, { 1, 0, 1 });
+	Particle* p5 = new Particle({ 0 , 40, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.8, 100, { 1, 0, 1 });
 	_particles.push_back(p5);
 
-	Particle* p6 = new Particle({ 0 , -60, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.8, 100, { 0.6, 0, 1 });
-	_particles.push_back(p6);
+	pfr->addRegistry(g, p1);
+	pfr->addRegistry(g, p2);
+	pfr->addRegistry(g, p3);
+	pfr->addRegistry(g, p4);
+	pfr->addRegistry(g, p5);
 
-	SpringForceGenerator* s1 = new SpringForceGenerator(15, 20, p);
-	pfr->addRegistry(s1, p1);
-	SpringForceGenerator* s2 = new SpringForceGenerator(15, 20, p1);
-	pfr->addRegistry(s2, p2);
-	SpringForceGenerator* s3 = new SpringForceGenerator(15, 20, p2);
-	pfr->addRegistry(s3, p3);
-	SpringForceGenerator* s4 = new SpringForceGenerator(15, 20, p3);
-	pfr->addRegistry(s4, p4);
-	SpringForceGenerator* s5 = new SpringForceGenerator(15, 20, p4);
-	pfr->addRegistry(s5, p5);
-	SpringForceGenerator* s6 = new SpringForceGenerator(15, 20, p5);
-	pfr->addRegistry(s6, p6);
-	
-	//
-	//GravityForceGenerator* g = new GravityForceGenerator({ 0, -4, 0 });
-	//pfr->addRegistry(g, p1);
-	//pfr->addRegistry(g, p2);
-	////pfr->addRegistry(g, p3);
-	////pfr->addRegistry(g, p4);
-	////pfr->addRegistry(g, p5);
-	////pfr->addRegistry(g, p6);
+
+	pfr->addRegistry(new SpringForceGenerator(50, 10, p), p1);
+
+	pfr->addRegistry(new SpringForceGenerator(45, 10, p1), p);
+	pfr->addRegistry(new SpringForceGenerator(40, 10, p1), p2);
+
+	pfr->addRegistry(new SpringForceGenerator(35, 10, p2), p1);
+	pfr->addRegistry(new SpringForceGenerator(30, 10, p2), p3);
+
+	pfr->addRegistry(new SpringForceGenerator(25, 10, p3), p2);
+	pfr->addRegistry(new SpringForceGenerator(20, 10, p3), p4);
+
+	pfr->addRegistry(new SpringForceGenerator(15, 10, p4), p3);
+	pfr->addRegistry(new SpringForceGenerator(10, 10, p4), p5);
+
+	pfr->addRegistry(new SpringForceGenerator(10, 10, p5), p4);
 	
 }
 
