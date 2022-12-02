@@ -14,6 +14,8 @@
 #include "ParticleSystem.h"
 #include "ParticleGenerator.h"
 
+#include "WorldManager.h"
+
 #include <iostream>
 #include <vector>
 
@@ -47,6 +49,8 @@ RenderItem* diana = NULL;
 ParticleSystem* ps;
 GaussianParticleGenerator* pg;
 
+WorldManager* wm;
+
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -72,6 +76,7 @@ void initPhysics(bool interactive)
 	gScene = gPhysics->createScene(sceneDesc);
 
 	ps = new ParticleSystem();
+	wm = new WorldManager(gPhysics, gScene);
 
 
 	
@@ -223,6 +228,12 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case 'R':
 	{
 		ps->BuoynacyTest();
+		break;
+	}
+	case 'T':
+	{
+		wm->addStaticObject();
+		wm->addDynamicObject();
 		break;
 	}
 	default:

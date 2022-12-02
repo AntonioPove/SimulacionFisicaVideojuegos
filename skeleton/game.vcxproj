@@ -257,6 +257,7 @@
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="CircleGenerator.cpp" />
     <ClCompile Include="DragGenerator.cpp" />
+    <ClCompile Include="DynamicsForceRegistry.cpp" />
     <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="Firework.cpp" />
     <ClCompile Include="ForceGenerator.cpp" />
@@ -275,6 +276,7 @@
     <ClCompile Include="SpringForceGenerator.cpp" />
     <ClCompile Include="UniformParticleGenerator.cpp" />
     <ClCompile Include="UniformWindGenerator.cpp" />
+    <ClCompile Include="WorldManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BuoyancyForceGenerator.h" />
@@ -282,6 +284,7 @@
     <ClInclude Include="CircleGenerator.h" />
     <ClInclude Include="core.hpp" />
     <ClInclude Include="DragGenerator.h" />
+    <ClInclude Include="DynamicsForceRegistry.h" />
     <ClInclude Include="Explosion.h" />
     <ClInclude Include="Firework.h" />
     <ClInclude Include="ForceGenerator.h" />
@@ -299,6 +302,7 @@
     <ClInclude Include="SpringForceGenerator.h" />
     <ClInclude Include="UniformParticleGenerator.h" />
     <ClInclude Include="UniformWindGenerator.h" />
+    <ClInclude Include="WorldManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

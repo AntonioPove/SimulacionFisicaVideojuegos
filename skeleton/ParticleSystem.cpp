@@ -230,7 +230,6 @@ void ParticleSystem::slinky()
 
 	
 	Particle* p = new Particle({ 0 , 65, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.99, 100, { 1, 0, 1 }, 1);
-	//_particles.push_back(p);
 	Particle* p1 = new Particle({ 0 , 60, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.8, 100, { 0.6, 0, 1 });
 	_particles.push_back(p1);
 	Particle* p2 = new Particle({ 0 , 55, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.8, 100, { 0.6, 0, 1 });

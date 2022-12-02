@@ -5,7 +5,6 @@
 
 typedef std::pair<ForceGenerator*, Particle*> FRPair;
 
-
 class ParticleForceRegistry : public std::multimap<ForceGenerator*, Particle*>
 {
 public:
