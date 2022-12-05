@@ -5,11 +5,20 @@ WorldManager::WorldManager(PxPhysics* gPhysics1, PxScene* gScene1)
 	gPhysics = gPhysics1;
 	gScene = gScene1;
 
+	dfr = new DynamicsForceRegistry();
+	exPrueba = new Explosion(500.0, 1000, 0, 0, 0);
+
+}
+
+WorldManager::~WorldManager()
+{
+	delete(item);
 }
 
 void WorldManager::addDynamicObject()
 {
-	PxRigidDynamic* object = gPhysics->createRigidDynamic(PxTransform({ 0, 10, 10 }));
+
+	object = gPhysics->createRigidDynamic(PxTransform({ 0, 10, 10 }));
 	object->setLinearVelocity(vel);
 	object->setAngularVelocity({ 0, 0, 0 });
 	PxShape* shape = CreateShape(PxBoxGeometry(size));
@@ -17,6 +26,9 @@ void WorldManager::addDynamicObject()
 	object->setMassSpaceInertiaTensor({size.y * size.z , size.x * size.z, size.x * size.y});
 	item = new RenderItem(shape, object, { 1, 0.8, 1, 1 });
 	gScene->addActor(*object);
+
+	_objects.push_back(object);
+	
 }
 
 void WorldManager::addStaticObject()
@@ -33,3 +45,20 @@ void WorldManager::addStaticObject()
 	item = new RenderItem(shape_suelo, pared, { 0.8, 0.8, 0.8, 1 });
 	gScene->addActor(*pared);
 }
+
+void WorldManager::update(double t)
+{
+	dfr->updateForces(t);
+	exPrueba->updateConst(t);
+
+}
+
+void WorldManager::addForce()
+{
+	for (auto& e : _objects)
+	{
+		dfr->addRegistry(exPrueba, e);
+	}
+}
+
+

@@ -2,9 +2,8 @@
 
 #include <map>
 #include "ForceGenerator.h"
-#include <PxPhysics.h>
 
-typedef std::pair<ForceGenerator*, physx::PxRigidDynamic*> FRPair;
+typedef std::pair<ForceGenerator*, physx::PxRigidDynamic*> FRPairDynamic;
 
 
 class DynamicsForceRegistry : public std::multimap<ForceGenerator*, physx::PxRigidDynamic*>
@@ -14,11 +13,11 @@ public:
 	{
 		for (auto it = begin(); it != end(); it++)
 		{
-			it->first->updateForceDynamics(duration);
+			it->first->updateForceDynamics(it->second, duration);
 		}
 	}
 
-	void addRegistry(ForceGenerator* fg, physx::PxRigidDynamic* p) { this->insert(FRPair(fg, p)); };
+	void addRegistry(ForceGenerator* fg, physx::PxRigidDynamic* p) { this->insert(FRPairDynamic(fg, p)); };
 
 	void deleteParticleRegistry(physx::PxRigidDynamic* p)
 	{

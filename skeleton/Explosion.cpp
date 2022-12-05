@@ -1,4 +1,5 @@
 #include "Explosion.h"
+#include <iostream>
 
 Explosion::Explosion(int R, int k, int ax, int ay, int az) :ForceGenerator()
 {
@@ -44,4 +45,33 @@ void Explosion::updateForce(Particle* particle, double t)
 
 
 	particle->addForce(dragF);
+}
+
+void Explosion::updateForceDynamics(physx::PxRigidDynamic* rigid, double t)
+{
+
+	if (!active)
+		return;
+
+	const double euler = std::exp(1.0);
+	auto pos = rigid->getGlobalPose().p;
+	auto difX = pos.x -ax_;
+	auto difY = pos.y - ay_;
+	auto difZ = pos.z - az_;
+
+	auto r2 = pow(difX, 2) + pow(difY, 2) + pow(difZ, 2);
+
+	if (r2 > pow(R_, 2))
+	{
+		return;
+	}
+
+	auto x = (k_ / r2) * difX * pow(euler, (-t / w_));
+	auto y = (k_ / r2) * difY * pow(euler, (-t / w_));
+	auto z = (k_ / r2) * difZ * pow(euler, (-t / w_));
+
+	Vector3 force(x, y, z);
+
+
+	rigid->addForce(force);
 }

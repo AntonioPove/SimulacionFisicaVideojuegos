@@ -108,6 +108,7 @@ void stepPhysics(bool interactive, double t)
 	//}
 
 	ps->update(t);
+	wm->update(t);
 }
 
 // Function to clean data
@@ -233,7 +234,21 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case 'T':
 	{
 		wm->addStaticObject();
+		break;
+	}
+	case 'P':
+	{
 		wm->addDynamicObject();
+		break;
+	}
+	case 'I':
+	{
+		wm->addForce();
+		break;
+	}
+	case 'C':
+	{
+		wm->changeAct();
 		break;
 	}
 	default:

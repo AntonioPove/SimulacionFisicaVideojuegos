@@ -10,11 +10,15 @@ public:
 	~Explosion() = default;
 
 	virtual void updateForce(Particle* particle, double t);
+	virtual void updateForceDynamics(physx::PxRigidDynamic* rigid, double t);
 
 	void updateConst(double t) { w_ += t; };
 
+	void activate() { active = !active; };
+
 protected:
 
+	bool active = false;
 	const double e_ = 2.71828182846;
 
 	double r_;
