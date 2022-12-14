@@ -64,7 +64,8 @@ void initPhysics(bool interactive)
 
 	gPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *gFoundation, PxTolerancesScale(),true,gPvd);
 
-	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
+	//gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
+	gMaterial = gPhysics->createMaterial(0.7f, 0.7f, 0.7f);
 
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
@@ -177,9 +178,10 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		ps->createFireworkSystem(3);
 		break;
 	}
-	case 'Q':
+	case 'O':
 	{
 		ps->destroy();
+		break;
 	}
 	case '5':
 	{
@@ -243,7 +245,12 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	}
 	case 'I':
 	{
-		wm->addForce();
+		wm->createUniform();
+		break;
+	}
+	case 'J':
+	{
+		wm->createGaussian();
 		break;
 	}
 	case 'C':

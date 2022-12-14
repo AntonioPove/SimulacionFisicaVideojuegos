@@ -8,6 +8,7 @@ WorldManager::WorldManager(PxPhysics* gPhysics1, PxScene* gScene1)
 	dfr = new DynamicsForceRegistry();
 	exPrueba = new Explosion(500.0, 1000, 0, 0, 0);
 
+
 }
 
 WorldManager::~WorldManager()
@@ -21,6 +22,7 @@ void WorldManager::addDynamicObject()
 	object = gPhysics->createRigidDynamic(PxTransform({ 0, 10, 10 }));
 	object->setLinearVelocity(vel);
 	object->setAngularVelocity({ 0, 0, 0 });
+	object->setMass(20);
 	PxShape* shape = CreateShape(PxBoxGeometry(size));
 	object->attachShape(*shape);
 	object->setMassSpaceInertiaTensor({size.y * size.z , size.x * size.z, size.x * size.y});
@@ -46,19 +48,38 @@ void WorldManager::addStaticObject()
 	gScene->addActor(*pared);
 }
 
+void WorldManager::addForce(std::list<PxRigidDynamic*> objects)
+{
+	for (auto e : objects) {
+		gScene->addActor(*e);
+		dfr->addRegistry(exPrueba, e);
+	}
+}
+
+void WorldManager::createUniform()
+{
+	uniform = new UniformRigidGenerator(this, { 0, 0, 0 }, { 10, 50, 10 }, 1.5, gPhysics, 0.1, 5);
+	uni = true;
+}
+
+void WorldManager::createGaussian()
+{
+
+	gaussian = new GaussianRigidGenerator(this, { 10, 10, 0 }, { 10, 10, 0 }, 1, gPhysics,
+		0.1f, 2, { 0, 10, 0 }, { 0, 20, 0 }, 20);
+	gau = true;
+}
+
 void WorldManager::update(double t)
 {
 	dfr->updateForces(t);
 	exPrueba->updateConst(t);
+	addForce(_objects);
+	if (uni)
+	addForce(uniform->generate(t));
 
-}
-
-void WorldManager::addForce()
-{
-	for (auto& e : _objects)
-	{
-		dfr->addRegistry(exPrueba, e);
-	}
+	if(gau)
+	addForce(gaussian->generate(t));
 }
 
 

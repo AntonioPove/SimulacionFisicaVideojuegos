@@ -1,4 +1,3 @@
-//MIO
 #include "ParticleSystem.h"
 #include "ParticleGenerator.h"
 #include  <iostream>

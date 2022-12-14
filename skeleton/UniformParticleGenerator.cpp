@@ -5,7 +5,6 @@ UniformParticleGenerator::UniformParticleGenerator(ParticleSystem* s, std::strin
 {
 	_vel_width = v;
 	_pos_width = pos;
-
 }
 
 std::list<Particle*> UniformParticleGenerator::generateParticles(double t)

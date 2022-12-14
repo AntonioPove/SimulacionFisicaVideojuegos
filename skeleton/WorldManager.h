@@ -4,6 +4,10 @@
 #include "RenderUtils.hpp"
 #include "DynamicsForceRegistry.h"
 
+#include "UniformRigidGenerator.h"
+
+#include "GaussianRigidGenerator.h"
+
 #include "Explosion.h"
 
 using namespace physx;
@@ -18,12 +22,17 @@ public:
 	void addDynamicObject();
 	void addStaticObject();
 	void update(double t);
-	void addForce();
 
 	void changeAct() { exPrueba->activate(); };
+	void addForce(std::list<PxRigidDynamic*> objectsD);
+
+	void createUniform();
+	void createGaussian();
 
 protected:
 
+	bool uni = false;
+	bool gau = false;
 	std::list<PxRigidDynamic*> _objects;
 	RenderItem* item;
 	PxPhysics* gPhysics;
@@ -37,5 +46,8 @@ protected:
 
 	DynamicsForceRegistry* dfr;
 	Explosion* exPrueba;
+
+	UniformRigidGenerator* uniform;
+	GaussianRigidGenerator* gaussian;
 };
 

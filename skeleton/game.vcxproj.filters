@@ -31,6 +31,8 @@
     <ClCompile Include="BuoyancyForceGenerator.cpp" />
     <ClCompile Include="WorldManager.cpp" />
     <ClCompile Include="DynamicsForceRegistry.cpp" />
+    <ClCompile Include="UniformRigidGenerator.cpp" />
+    <ClCompile Include="GaussianRigidGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -63,6 +65,8 @@
     <ClInclude Include="BuoyancyForceGenerator.h" />
     <ClInclude Include="WorldManager.h" />
     <ClInclude Include="DynamicsForceRegistry.h" />
+    <ClInclude Include="UniformRigidGenerator.h" />
+    <ClInclude Include="GaussianRigidGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
