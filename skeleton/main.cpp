@@ -15,6 +15,7 @@
 #include "ParticleGenerator.h"
 
 #include "WorldManager.h"
+#include "Player.h"
 
 #include <iostream>
 #include <vector>
@@ -51,6 +52,8 @@ GaussianParticleGenerator* pg;
 
 WorldManager* wm;
 
+Player* player;
+
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -78,15 +81,9 @@ void initPhysics(bool interactive)
 
 	ps = new ParticleSystem();
 	wm = new WorldManager(gPhysics, gScene);
+	wm->createMap();
 
-
-	
-	//particle = new Particle({ 0, 10, 0 }, { 0, 10, 0 }, 6, {0, -2, 0}, 0.99);
-	//ground = new RenderItem(CreateShape(PxBoxGeometry(100, 1, 100)),
-	//	new PxTransform(0, -5, 20), { 1,1,1,1 });
-
-	//diana = new RenderItem(CreateShape(PxBoxGeometry(10, 10, 10)),
-	//	new PxTransform(10, 100, 10), { 1,0.5,0.5,1 });
+	player = new Player(wm);
 
 	}
 
@@ -100,13 +97,6 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
-
-	////particle->integrate(t);
-	//for (int i = 0; i < particles.size(); i++)
-	//{
-	//	particles[i]->integrate(t);
-
-	//}
 
 	ps->update(t);
 	wm->update(t);
@@ -141,122 +131,12 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 	switch(toupper(key))
 	{
-	//case 'B': break;
-	//case ' ':	break;
-	case 'B':
-	{
-		//particles.push_back(new Proyectil(GetCamera()->getEye(), 200, 3, 20, 10000));
-		break;
-	}
-	case 'G':
-	{
-		ps->addParticleGenerator(ParticleSystem::Gau, { 10, 10, 10 }, { 1, 1, 0 }, 4);
-		break;
-	}
-	case 'U':
-	{
-		ps->addParticleGenerator(ParticleSystem::Uni, { 1, 1, 1 }, { 0, 10, 0 }, 4);
-		break;
-	}
-	case 'L':
-	{
-		ps->addParticleGenerator(ParticleSystem::Uni, { 10, 50, 10 }, { 0, 0, 0 }, 1);
-		break;
-	}
-	case '1':
-	{
-		ps->createFireworkSystem(1);
-		break;
-	}
-	case '2':
-	{
-		ps->createFireworkSystem(2);
-		break;
-	}
-	case '3':
-	{
-		ps->createFireworkSystem(3);
-		break;
-	}
-	case 'O':
-	{
-		ps->destroy();
-		break;
-	}
-	case '5':
-	{
-		ps->testForces(5);
-		break;
-	}
-	case '6':
-	{
-		ps->testForces(6);
-		break;
-	}
-	case '7':
-	{
-		ps->testForces(7);
-		break;
-	}
-	case '8':
-	{
-		ps->testForces(8);
-		break;
-	}
-	case '9':
-	{
-		ps->testForces(9);
-		break;
-	}
-	case '0':
-	{
-		ps->testForces(0);
-		break;
-	}
-	case 'M':
-	{
-		ps->generateSpringDemo();
-		break;
-	}	
-	case 'N':
-	{
-		ps->generateSpringDemo2();
-		break;
-	}
-	case 'Y':
-	{
-		ps->slinky();
-		break;
-	}
-	case 'R':
-	{
-		ps->BuoynacyTest();
-		break;
-	}
-	case 'T':
-	{
-		wm->addStaticObject();
-		break;
-	}
-	case 'P':
-	{
-		wm->addDynamicObject();
-		break;
-	}
-	case 'I':
-	{
-		wm->createUniform();
-		break;
-	}
-	case 'J':
-	{
-		wm->createGaussian();
-		break;
-	}
-	case 'C':
-	{
-		wm->changeAct();
-		break;
+	case 'A':
+	case 'S':
+	case 'D':
+	case 'W':
+	{	
+		player->inputPlayer(key);
 	}
 	default:
 		break;

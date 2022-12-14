@@ -33,6 +33,7 @@
     <ClCompile Include="DynamicsForceRegistry.cpp" />
     <ClCompile Include="UniformRigidGenerator.cpp" />
     <ClCompile Include="GaussianRigidGenerator.cpp" />
+    <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -67,6 +68,7 @@
     <ClInclude Include="DynamicsForceRegistry.h" />
     <ClInclude Include="UniformRigidGenerator.h" />
     <ClInclude Include="GaussianRigidGenerator.h" />
+    <ClInclude Include="Player.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

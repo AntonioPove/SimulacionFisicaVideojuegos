@@ -32,6 +32,7 @@
 #include "Camera.h"
 #include <ctype.h>
 #include "foundation/PxMat33.h"
+#include <iostream>
 
 using namespace physx;
 
@@ -68,6 +69,11 @@ bool Camera::handleKey(unsigned char key, int x, int y, float speed)
 	case 'D':	mEye += viewY*2.0f*speed;		break;
 	default:							return false;
 	}
+
+	std::cout << mDir.x << std::endl;
+	std::cout << mDir.y << std::endl;
+	std::cout << mDir.z << std::endl;
+
 	return true;
 }
 

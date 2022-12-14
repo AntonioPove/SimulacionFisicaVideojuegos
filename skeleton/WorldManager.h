@@ -26,8 +26,12 @@ public:
 	void changeAct() { exPrueba->activate(); };
 	void addForce(std::list<PxRigidDynamic*> objectsD);
 
+	PxRigidDynamic* createPlayer();
+
 	void createUniform();
 	void createGaussian();
+
+	void createMap();
 
 protected:
 
