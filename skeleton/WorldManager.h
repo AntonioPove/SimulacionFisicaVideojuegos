@@ -9,6 +9,7 @@
 #include "GaussianRigidGenerator.h"
 
 #include "Explosion.h"
+#include "DragGenerator.h"
 
 using namespace physx;
 
@@ -24,7 +25,7 @@ public:
 	void update(double t);
 
 	void changeAct() { exPrueba->activate(); };
-	void addForce(std::list<PxRigidDynamic*> objectsD);
+	void addForce(std::list<PxRigidDynamic*> objectsD, bool insert);
 
 	PxRigidDynamic* createPlayer();
 
@@ -50,6 +51,7 @@ protected:
 
 	DynamicsForceRegistry* dfr;
 	Explosion* exPrueba;
+	DragGenerator* dragPrueba;
 
 	UniformRigidGenerator* uniform;
 	GaussianRigidGenerator* gaussian;

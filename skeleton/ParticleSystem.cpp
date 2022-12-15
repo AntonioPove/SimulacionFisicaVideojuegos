@@ -9,13 +9,17 @@ ParticleSystem::ParticleSystem()
 	//Particulas gausiano/uniforme y firework
 	fountainParticle = new Particle({ 0 ,0, 0 }, { 0, 0, 0 }, 0.8, { 0, -2, 0 }, 0.99, 1, { 1, 0, 1 });
 	fountainParticle1 = new Particle({ 0 ,0, 0 }, { 0, 100, 0 }, 0.8, { 0, -2, 0 }, 0.99, 5, { 0, 1, 1 });
-	fireworkP = new Particle({ 0,0,0 }, { 10, 10, 10 }, 0.5, { 0, 0, 0 }, 0.99, 1, { 0, 1,0.5 });
-	fireworkP = new Particle({ 0,0,0 }, { 10, 10, 10 }, 0.5, { 0, 0, 0 }, 0.99, 1, { 0, 1,0.5 });
+	fireworkP = new Particle({ 0,0,0 }, { 30, 150000000, 30 }, 3, { 0, 2, 0 }, 0.99, 40, { 1, 1, 0.5 });
 
 
 	//Desviaciones
 	devTip_pos_Gau = { 1, 0, 1 };
 	devTip_vel_Gau = { 3, 0, 3 };
+
+	lSpawn = 0;
+	tSpwan = 1.0f;
+	currentTime = 0;
+
 
 }
 
@@ -278,6 +282,25 @@ void ParticleSystem::BuoynacyTest()
 	pfr->addRegistry(g, p);
 
 
+
+}
+
+void ParticleSystem::generaFuegos(double t)
+{
+	std::shared_ptr<CircleGenerator> gen1(new CircleGenerator(this, "fireWork1",
+		fireworkP, 10, { 0, 10,0 }, { 0, 0, 0 }));
+
+
+	currentTime += t;
+
+	if (lSpawn + tSpwan <= currentTime)
+	{
+		lSpawn = currentTime;
+
+		_particles.push_back(new Firework({ 0,0,0 }, { 0, 200 ,0 }, 5,
+			{ 0, -2, 0 }, 0.5, 1, { 0.6,0.9,1 }, { gen1 }));
+
+	}
 
 }
 

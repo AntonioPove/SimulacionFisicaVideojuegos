@@ -7,6 +7,7 @@ WorldManager::WorldManager(PxPhysics* gPhysics1, PxScene* gScene1)
 
 	dfr = new DynamicsForceRegistry();
 	exPrueba = new Explosion(500.0, 1000, 0, 0, 0);
+	dragPrueba = new DragGenerator(0.01, 0.02);
 
 }
 
@@ -26,7 +27,7 @@ void WorldManager::addDynamicObject()
 	object->attachShape(*shape);
 	object->setMassSpaceInertiaTensor({size.y * size.z , size.x * size.z, size.x * size.y});
 	item = new RenderItem(shape, object, { 1, 0.8, 1, 1 });
-	gScene->addActor(*object);
+	//gScene->addActor(*object);
 
 	_objects.push_back(object);
 	
@@ -47,18 +48,22 @@ void WorldManager::addStaticObject()
 	gScene->addActor(*pared);
 }
 
-void WorldManager::addForce(std::list<PxRigidDynamic*> objects)
+void WorldManager::addForce(std::list<PxRigidDynamic*> objects, bool insert)
 {
 	for (auto e : objects) {
+		if(insert)
 		gScene->addActor(*e);
-		dfr->addRegistry(exPrueba, e);
+
+		//dfr->addRegistry(exPrueba, e);
+		dfr->addRegistry(dragPrueba, e);
 	}
 }
 
 PxRigidDynamic* WorldManager::createPlayer()
 {
-	object = gPhysics->createRigidDynamic(PxTransform({ 0, 10, 10 }));
+	object = gPhysics->createRigidDynamic(PxTransform({ 10, 10, 30 }));
 	object->setAngularVelocity({ 0, 0, 0 });
+	object->setLinearVelocity({ 0, 0, 0 });
 	PxShape* shape = CreateShape(PxSphereGeometry(10));
 	object->attachShape(*shape);
 	object->setMassSpaceInertiaTensor({ size.y * size.z , size.x * size.z, size.x * size.y });
@@ -165,14 +170,16 @@ void WorldManager::createMap()
 
 void WorldManager::update(double t)
 {
+	addForce(_objects, false);
+
 	dfr->updateForces(t);
 	exPrueba->updateConst(t);
-	addForce(_objects);
+	
 	if (uni)
-	addForce(uniform->generate(t));
+	addForce(uniform->generate(t), true);
 
 	if(gau)
-	addForce(gaussian->generate(t));
+	addForce(gaussian->generate(t), true);
 }
 
 

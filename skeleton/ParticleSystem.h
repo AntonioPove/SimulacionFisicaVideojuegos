@@ -51,6 +51,8 @@ public:
 
 	void BuoynacyTest();
 
+	void generaFuegos(double t);
+
 protected:
 
 	std::list<ParticleGenerator*> _particles_generator;
@@ -80,5 +82,11 @@ protected:
 	SpringForceGenerator* spring1;
 
 	BuoyancyForceGenerator* buoyancy;
+
+	//Fuegos Art
+	double currentTime;
+	double tSpwan;
+	double lSpawn;
+	double nSpawn;
 };
 

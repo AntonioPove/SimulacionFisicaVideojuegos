@@ -3,7 +3,7 @@
 Player::Player(WorldManager* wm)
 {
 	player_ = wm->createPlayer();
-	vel_ = 20;
+	vel_ = 50;
 	velJump_ = 30;
 }
 
@@ -18,27 +18,26 @@ void Player::inputPlayer(char key)
 	{
 	case 'A':
 	{
-		player_->setLinearVelocity({ vel_, 0, 0 });
+		player_->setAngularVelocity({ 0, 0, -vel_ });
+		player_->setLinearVelocity({ 0, 0, -vel_ });
 		break;
 	}
 	case 'S':
 	{
-		player_->setLinearVelocity({ 0, 0, -vel_ });
+		player_->setAngularVelocity({ -vel_, 0, 0 });
+		player_->setLinearVelocity({ -vel_, 0, 0 });
 		break;
 	}
 	case 'D':
 	{
-		player_->setLinearVelocity({ -vel_, 0, 0 });
+		player_->setAngularVelocity({ 0, 0, vel_ });
+		player_->setLinearVelocity({ 0, 0, vel_ });
 		break;
 	}
 	case 'W':
 	{
-		player_->setLinearVelocity({ 0, 0, vel_ });
-		break;
-	}
-	case 'E':
-	{
-		player_->setLinearVelocity({ 0, velJump_, 0 });
+		player_->setAngularVelocity({ vel_, 0, 0 });
+		player_->setLinearVelocity({ vel_, 0, 0 });
 		break;
 	}
 	default:

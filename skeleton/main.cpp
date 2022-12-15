@@ -100,6 +100,7 @@ void stepPhysics(bool interactive, double t)
 
 	ps->update(t);
 	wm->update(t);
+	//ps->generaFuegos(t);
 }
 
 // Function to clean data
@@ -135,6 +136,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case 'S':
 	case 'D':
 	case 'W':
+	case 'E':
 	{	
 		player->inputPlayer(key);
 	}
