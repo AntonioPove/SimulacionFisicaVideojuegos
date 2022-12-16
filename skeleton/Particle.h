@@ -7,7 +7,7 @@ class Particle
 {
 public:
 	Particle(Vector3 pos_, Vector3 Vel_, double size_, 
-		Vector3 a_, double d_, double deathTime, Vector3 rgb, int type = 0);
+		Vector3 a_, double d_, double deathTime, Vector3 rgb, int type = 0, Vector3 sizeRec = {0, 0, 0});
 	~Particle();
 
 	virtual bool integrate(double t);
