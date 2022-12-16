@@ -53,6 +53,8 @@ public:
 
 	void generaFuegos(double t);
 
+	void generaFoso();
+
 protected:
 
 	std::list<ParticleGenerator*> _particles_generator;

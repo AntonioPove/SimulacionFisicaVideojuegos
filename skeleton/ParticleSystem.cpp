@@ -305,3 +305,9 @@ void ParticleSystem::generaFuegos(double t)
 
 }
 
+void ParticleSystem::generaFoso()
+{
+
+
+}
+
