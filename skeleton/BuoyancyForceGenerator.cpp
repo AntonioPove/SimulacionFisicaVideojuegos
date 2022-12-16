@@ -7,7 +7,7 @@ BuoyancyForceGenerator::BuoyancyForceGenerator(float h, float V, float d) : Forc
 	_volume = V;
 	_liquid_density = d;
 
-	_liquid_particle = new Particle({ 0 , 0, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.99, 100, { 0, 0, 1 }, 2, {100, 1, 100});
+	_liquid_particle = new Particle({ 0 , -40, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.99, 100, { 0, 0, 1 }, 2, {500, 1, 500});
 }
 
  void BuoyancyForceGenerator::updateForce(Particle* particle, double t)

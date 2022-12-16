@@ -307,9 +307,9 @@ void ParticleSystem::generaFuegos(double t)
 
 void ParticleSystem::generaFoso()
 {
-	Particle* p = new Particle({ 0 , 0, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.99, 100, { 1, 0, 1 }, 1);
+	Particle* p = new Particle({ -400 , 0, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.99, 100, { 0, 1, 0 }, 2, {10, 5, 5});
 	_particles.push_back(p);
-	p->setVolumen(8);
+	p->setVolumen(10*25);
 
 	buoyancy = new BuoyancyForceGenerator(1, 10, 10);
 	pfr->addRegistry(buoyancy, p);

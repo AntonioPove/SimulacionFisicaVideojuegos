@@ -83,6 +83,8 @@ void initPhysics(bool interactive)
 	wm = new WorldManager(gPhysics, gScene);
 	wm->createMap();
 
+	ps->generaFoso();
+
 	player = new Player(wm);
 
 	}
@@ -100,6 +102,7 @@ void stepPhysics(bool interactive, double t)
 
 	ps->update(t);
 	wm->update(t);
+
 	//ps->generaFuegos(t);
 }
 
