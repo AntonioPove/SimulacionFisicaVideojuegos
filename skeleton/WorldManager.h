@@ -39,6 +39,9 @@ protected:
 	bool uni = false;
 	bool gau = false;
 	std::list<PxRigidDynamic*> _objects;
+
+
+	std::list<RenderItem*> _renderItems;
 	RenderItem* item;
 	PxPhysics* gPhysics;
 	PxScene* gScene;

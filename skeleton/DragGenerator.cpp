@@ -10,7 +10,7 @@ DragGenerator::DragGenerator(const float k1, const float k2) : ForceGenerator()
 	_k1 = k1;
 	_k2 = k2;
 
-	_wind = { 10, 0 , 0 };
+	_wind = { 3, 0 , 0 };
 }
 
 void DragGenerator::updateForce(Particle* particle, double t)
@@ -34,6 +34,7 @@ void DragGenerator::updateForceDynamics(physx::PxRigidDynamic* rigid, double t)
 	if (!active)
 		return;
 	Vector3 v = _wind;
+	//Vector3 v = rigid->getLinearVelocity();
 	float drag_coef = v.normalize();
 	Vector3 dragF;
 	drag_coef = (_k1 * drag_coef) + _k2 * drag_coef * drag_coef;
