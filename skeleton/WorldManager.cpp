@@ -60,7 +60,7 @@ void WorldManager::addForce(std::list<PxRigidDynamic*> objects, bool insert)
 		gScene->addActor(*e);
 
 		//dfr->addRegistry(exPrueba, e);
-		dfr->addRegistry(dragPrueba, e);
+		//dfr->addRegistry(dragPrueba, e);
 	}
 }
 

@@ -307,15 +307,26 @@ void ParticleSystem::generaFuegos(double t)
 
 void ParticleSystem::generaFoso()
 {
-	Particle* p = new Particle({ -400 , 0, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.99, 100, { 0, 1, 0 }, 2, {10, 5, 5});
+	Particle* p = new Particle({ -400 , 0, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.99, 100, { 0, 1, 0 }, 2, {50, 20, 20});
 	_particles.push_back(p);
-	p->setVolumen(10*25);
+	p->setVolumen(50 * 20 * 20);
+	Particle* p1 = new Particle({ 0 , 0, 400 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.99, 100, { 0, 1, 0.2 }, 2, { 60, 20, 20 });
+	_particles.push_back(p1);
+	p1->setVolumen(60  * 20 * 20);
+	Particle* p2 = new Particle({ 300 , 0, 40 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.99, 100, { 0, 1, 0 }, 2, { 30, 20, 60 });
+	_particles.push_back(p2);
+	p2->setVolumen(30 * 20 * 60);
 
-	buoyancy = new BuoyancyForceGenerator(1, 10, 10);
+
+	buoyancy = new BuoyancyForceGenerator(2, 10, 1000);
 	pfr->addRegistry(buoyancy, p);
+	pfr->addRegistry(buoyancy, p1);
+	pfr->addRegistry(buoyancy, p2);
 
 	GravityForceGenerator* g = new GravityForceGenerator({ 0, -9.8, 0 });
 	pfr->addRegistry(g, p);
+	pfr->addRegistry(g, p1);
+	pfr->addRegistry(g, p2);
 
 }
 
