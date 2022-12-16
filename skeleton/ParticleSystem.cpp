@@ -191,11 +191,12 @@ void ParticleSystem::generateSpringDemo()
 	Particle* p1 = new Particle({ 0 ,10, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.99, 100, { 1, 0, 0 });
 	Particle* p2 = new Particle({ 0 ,10, 0 }, { 0, 0, 0 },2, { 0, 0, 0 }, 0.99, 100, { 0.6, 0, 1 }, 1);
 	p2->setMass(2.0);
-	//p1->changeSemiImplicit();
+	p1->changeSemiImplicit();
 
 	GravityForceGenerator* g = new GravityForceGenerator({ 0, -2, 0 });
 
-	spring1 = new SpringForceGenerator(1000, 10, p2);
+	spring1 = new SpringForceGenerator(1, 10, p2);
+	spring1->setk(1000);
 	
 	pfr->addRegistry(spring1, p1);
 	pfr->addRegistry(g, p1);
@@ -272,9 +273,9 @@ void ParticleSystem::BuoynacyTest()
 	_particles.push_back(p);
 	p->setVolume(8);
 
-	Particle* p1 = new Particle({ 0 , 10, 10 }, { 0, 0, 0 }, 1, { 0, 0, 0 }, 0.99, 100, { 1, 0, 1 }, 0);
+	Particle* p1 = new Particle({ 0 , 10, 10 }, { 0, 0, 0 }, 1, { 0, 0, 0 }, 0.99, 100, { 1, 0, 1 }, 1);
 	_particles.push_back(p1);
-	p1->setVolume((4/3)*3.14*1);
+	p1->setVolume(1);
 	
 
 	buoyancy = new BuoyancyForceGenerator(1, 10, 10);
