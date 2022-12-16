@@ -270,12 +270,21 @@ void ParticleSystem::BuoynacyTest()
 {
 	Particle* p = new Particle({ 0 , 0, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.99, 100, { 1, 0, 1 }, 1);
 	_particles.push_back(p);
+	p->setVolume(8);
+
+	Particle* p1 = new Particle({ 0 , 10, 10 }, { 0, 0, 0 }, 1, { 0, 0, 0 }, 0.99, 100, { 1, 0, 1 }, 0);
+	_particles.push_back(p1);
+	p1->setVolume((4/3)*3.14*1);
+	
 
 	buoyancy = new BuoyancyForceGenerator(1, 10, 10);
+
 	pfr->addRegistry(buoyancy, p);
+	pfr->addRegistry(buoyancy, p1);
 
 	GravityForceGenerator* g = new GravityForceGenerator({ 0, -9.8, 0 });
 	pfr->addRegistry(g, p);
+	pfr->addRegistry(g, p1);
 
 
 

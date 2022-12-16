@@ -18,12 +18,14 @@ public:
 	void deleteForce();
 	
 	void setMass(float mass) { mass_ = mass; inverse_mass = 1 / mass_;};
+	void setVolume(float volume) { _volume = volume; };
 
 	physx::PxTransform pos;
 	Vector3 vel;
 	Vector3 force = {0, 0, 0};
 
 	const float getMass() { return mass_; };
+	const float getVolume() { return _volume; };
 	const float getInverseMass() { return inverse_mass; };
 
 	void changeSemiImplicit() { semiImplict = !semiImplict; };
@@ -46,7 +48,7 @@ protected:
 	float inverse_mass;
 	float mass_;
 
-
+	float _volume;
 	bool semiImplict = true;
 };
 
