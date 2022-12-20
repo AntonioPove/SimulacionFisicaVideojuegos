@@ -10,6 +10,7 @@ public:
 	void updatePlayer(double t);
 	void inputPlayer(char key);
 
+	bool collision(std::list<PxRigidDynamic*> bombs);
 
 private:
 
@@ -18,5 +19,8 @@ private:
 
 	float vel_;
 	float velJump_;
+
+	float sizePlayer;
+	float sizeEnemies;
 };
 

@@ -4,9 +4,12 @@ class UniformWindGenerator : public DragGenerator
 {
 public:
 	UniformWindGenerator(float k1, float k2, Vector3 air, int ax, int ay, int az, int range);
+	//Todo el area
+	UniformWindGenerator(float k1, float k2, Vector3 air);
 	~UniformWindGenerator();
 
 	void updateForce(Particle* particle, double t) override;
+	virtual void updateForceDynamics(physx::PxRigidDynamic* rigid, double t);
 
 protected:
 	float _k1;

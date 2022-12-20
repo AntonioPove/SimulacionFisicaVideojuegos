@@ -50,10 +50,10 @@ public:
 	void slinky();
 
 	void BuoynacyTest();
-
 	void generaFuegos(double t);
-
 	void generaFoso();
+	void generaWaterFall();
+
 
 protected:
 

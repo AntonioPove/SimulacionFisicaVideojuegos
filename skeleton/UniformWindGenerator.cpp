@@ -5,7 +5,7 @@ UniformWindGenerator::UniformWindGenerator(float k1, float k2, Vector3 air, int 
 	_k1 = k1;
 	_k2 = k2;
 	air_ = air;
-
+	
 	MaxX = ax + range;
 	MaxY = ay + range;
 	MaxZ = az + range;
@@ -14,6 +14,16 @@ UniformWindGenerator::UniformWindGenerator(float k1, float k2, Vector3 air, int 
 	MinZ = az;
 
 }
+
+
+UniformWindGenerator::UniformWindGenerator(float k1, float k2, Vector3 air)
+{
+	_k1 = k1;
+	_k2 = k2;
+	air_ = air;
+
+}
+
 UniformWindGenerator::~UniformWindGenerator()
 {
 }
@@ -39,5 +49,27 @@ void UniformWindGenerator::updateForce(Particle* particle, double t)
 
 	std::cout << dragF.x << "\t" << dragF.y << "\t" << dragF.z << std::endl;
 	particle->addForce(dragF);
+
+}
+
+void UniformWindGenerator::updateForceDynamics(physx::PxRigidDynamic* rigid, double t)
+{
+	if (!active)
+		return;
+
+	auto p = rigid->getGlobalPose().p;
+
+	Vector3 v = rigid->getLinearVelocity() + air_;
+	float drag_coef = v.normalize();
+	Vector3 dragF;
+	drag_coef = (_k1 * drag_coef) + _k2 * drag_coef * drag_coef;
+	dragF = -v * drag_coef;
+
+	std::cout << dragF.x << "\t" << dragF.y << "\t" << dragF.z << std::endl;
+	rigid->addForce(dragF);
+
+
+
+
 
 }

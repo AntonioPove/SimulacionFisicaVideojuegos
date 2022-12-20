@@ -1,5 +1,6 @@
 #pragma once
 #include "Particle.h"
+#include "WorldManager.h"
 #include <string>
 #include <list>
 #include <random>

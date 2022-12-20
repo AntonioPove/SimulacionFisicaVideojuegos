@@ -5,13 +5,13 @@
 #include "DynamicsForceRegistry.h"
 
 #include "UniformRigidGenerator.h"
-
 #include "GaussianRigidGenerator.h"
 
 #include "Explosion.h"
-#include "DragGenerator.h"
 
 using namespace physx;
+
+class Player;
 
 class WorldManager
 {
@@ -24,22 +24,27 @@ public:
 	void addStaticObject();
 	void update(double t);
 
-	void changeAct() { exPrueba->activate(); };
+	//void changeAct() { exPrueba->activate(); };
 	void addForce(std::list<PxRigidDynamic*> objectsD, bool insert);
 
-	PxRigidDynamic* createPlayer();
+	PxRigidDynamic* createPlayer(Player* p);
 
 	void createUniform();
 	void createGaussian();
+	void activeDrag(float t);
 
 	void createMap();
+	void createBombs();
+
 
 protected:
 
 	bool uni = false;
 	bool gau = false;
+
 	std::list<PxRigidDynamic*> _objects;
 
+	std::list<PxRigidDynamic*> _bombs;
 
 	std::list<RenderItem*> _renderItems;
 	RenderItem* item;
@@ -54,9 +59,18 @@ protected:
 
 	DynamicsForceRegistry* dfr;
 	Explosion* exPrueba;
-	DragGenerator* dragPrueba;
+	//DragGenerator* dragPrueba;
+	//UniformWindGenerator* wind_;
 
 	UniformRigidGenerator* uniform;
 	GaussianRigidGenerator* gaussian;
+
+	double currentTime;
+	double tSpwan;
+	double lSpawn;
+
+	bool drag = false;
+
+	Player* player_;
 };
 

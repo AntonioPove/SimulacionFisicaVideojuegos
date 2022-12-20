@@ -82,8 +82,10 @@ void initPhysics(bool interactive)
 	ps = new ParticleSystem();
 	wm = new WorldManager(gPhysics, gScene);
 	wm->createMap();
+	wm->createBombs();
 
 	ps->generaFoso();
+	ps->generaWaterFall();
 
 	player = new Player(wm);
 

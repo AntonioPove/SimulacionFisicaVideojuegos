@@ -33,6 +33,8 @@ void DragGenerator::updateForceDynamics(physx::PxRigidDynamic* rigid, double t)
 
 	if (!active)
 		return;
+
+
 	Vector3 v = _wind;
 	//Vector3 v = rigid->getLinearVelocity();
 	float drag_coef = v.normalize();

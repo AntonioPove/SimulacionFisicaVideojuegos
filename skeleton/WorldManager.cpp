@@ -5,9 +5,15 @@ WorldManager::WorldManager(PxPhysics* gPhysics1, PxScene* gScene1)
 	gPhysics = gPhysics1;
 	gScene = gScene1;
 
+	lSpawn = 0;
+	tSpwan = 5.0f;
+	currentTime = 0;
+
 	dfr = new DynamicsForceRegistry();
 	exPrueba = new Explosion(500.0, 1000, 0, 0, 0);
-	dragPrueba = new DragGenerator(0.01, 0.02);
+
+	//dragPrueba = new DragGenerator(0.01, 0.02);
+	//wind_ = new UniformWindGenerator(0.01, 0.02, { 0, 0, -1 });
 
 }
 
@@ -59,13 +65,15 @@ void WorldManager::addForce(std::list<PxRigidDynamic*> objects, bool insert)
 		if(insert)
 		gScene->addActor(*e);
 
-		//dfr->addRegistry(exPrueba, e);
+		dfr->addRegistry(exPrueba, e);
 		//dfr->addRegistry(dragPrueba, e);
+		//dfr->addRegistry(wind_, e);
 	}
 }
 
-PxRigidDynamic* WorldManager::createPlayer()
+PxRigidDynamic* WorldManager::createPlayer(Player* p)
 {
+	player_ = p;
 	object = gPhysics->createRigidDynamic(PxTransform({ 10, 10, 30 }));
 	object->setAngularVelocity({ 0, 0, 0 });
 	object->setLinearVelocity({ 0, 0, 0 });
@@ -92,6 +100,20 @@ void WorldManager::createGaussian()
 	gaussian = new GaussianRigidGenerator(this, { 10, 10, 0 }, { 10, 10, 0 }, 1, gPhysics,
 		0.1f, 2, { 0, 10, 0 }, { 0, 20, 0 }, 20);
 	gau = true;
+}
+
+void WorldManager::activeDrag(float t)
+{
+
+	currentTime += t;
+
+	if (lSpawn + tSpwan <= currentTime)
+	{
+		lSpawn = currentTime;
+
+		//wind_->activate();
+	}
+
 }
 
 void WorldManager::createMap()
@@ -199,17 +221,55 @@ void WorldManager::createMap()
 
 }
 
+void WorldManager::createBombs()
+{
+	object = gPhysics->createRigidDynamic(PxTransform({ 30, 0, -60 }));
+	PxShape* shapeB1 = CreateShape(PxSphereGeometry(15));
+	object->attachShape(*shapeB1);
+	object->setMassSpaceInertiaTensor({ size.y * size.z , size.x * size.z, size.x * size.y });
+	item = new RenderItem(shapeB1, object, { 1, 0.18, 0.4, 1 });
+	gScene->addActor(*object);
+	_renderItems.push_back(item);
+	_bombs.push_back(object);
+
+	object = gPhysics->createRigidDynamic(PxTransform({ 30, 0, 60 }));
+	PxShape* shapeB2 = CreateShape(PxSphereGeometry(15));
+	object->attachShape(*shapeB2);
+	object->setMassSpaceInertiaTensor({ size.y * size.z , size.x * size.z, size.x * size.y });
+	item = new RenderItem(shapeB2, object, { 1, 0.18, 0.4, 1 });
+	gScene->addActor(*object);
+	_renderItems.push_back(item);
+	_bombs.push_back(object);
+
+	object = gPhysics->createRigidDynamic(PxTransform({ -50, 0, -100 }));
+	PxShape* shapeB3 = CreateShape(PxSphereGeometry(15));
+	object->attachShape(*shapeB3);
+	object->setMassSpaceInertiaTensor({ size.y * size.z , size.x * size.z, size.x * size.y });
+	item = new RenderItem(shapeB3, object, { 1, 0.18, 0.4, 1 });
+	gScene->addActor(*object);
+	_renderItems.push_back(item);
+	_bombs.push_back(object);
+
+
+}
+
 void WorldManager::update(double t)
 {
 	addForce(_objects, false);
+
 	dfr->updateForces(t);
 	exPrueba->updateConst(t);
-	
+
+	player_;
+	//activeDrag(t);
+
 	if (uni)
 	addForce(uniform->generate(t), true);
 
 	if(gau)
 	addForce(gaussian->generate(t), true);
+
+
 }
 
 

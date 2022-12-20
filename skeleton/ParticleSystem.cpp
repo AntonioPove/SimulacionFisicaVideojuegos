@@ -7,9 +7,9 @@ ParticleSystem::ParticleSystem()
 	pfr = new ParticleForceRegistry();
 	
 	//Particulas gausiano/uniforme y firework
-	fountainParticle = new Particle({ 0 ,0, 0 }, { 0, 0, 0 }, 0.8, { 0, -2, 0 }, 0.99, 1, { 1, 0, 1 });
+	fountainParticle = new Particle({ 0 ,0, 0 }, { 10, -10, 10 }, 2, { 0, -2, 0 }, 0.99, 5, { 0.5, 1, 1 });
 	fountainParticle1 = new Particle({ 0 ,0, 0 }, { 0, 100, 0 }, 0.8, { 0, -2, 0 }, 0.99, 5, { 0, 1, 1 });
-	fireworkP = new Particle({ 0,0,0 }, { 30, 150000000, 30 }, 3, { 0, 2, 0 }, 0.99, 40, { 1, 1, 0.5 });
+	fireworkP = new Particle({ 0,0,0 }, { 30, 15000, 30 }, 3, { 0, 2, 0 }, 0.99, 40, { 1, 1, 0.5 });
 
 
 	//Desviaciones
@@ -318,7 +318,7 @@ void ParticleSystem::generaFoso()
 	p2->setVolumen(30 * 20 * 60);
 
 
-	buoyancy = new BuoyancyForceGenerator(2, 10, 1000);
+	buoyancy = new BuoyancyForceGenerator(2, 10, 0.5);
 	pfr->addRegistry(buoyancy, p);
 	pfr->addRegistry(buoyancy, p1);
 	pfr->addRegistry(buoyancy, p2);
@@ -328,5 +328,13 @@ void ParticleSystem::generaFoso()
 	pfr->addRegistry(g, p1);
 	pfr->addRegistry(g, p2);
 
+}
+
+void ParticleSystem::generaWaterFall()
+{
+	addParticleGenerator(Gau, { 125, 100, 170 }, { 60, -25, 60 }, 1);
+	addParticleGenerator(Gau, { -200, 100, -170 }, { -60, -25, -60 }, 1);
+	addParticleGenerator(Gau, { -200, 100, 170 }, { -60, -25, 60 }, 1);
+	addParticleGenerator(Gau, { 125, 100, -170 }, { 60, -25, -60 }, 1);
 }
 

@@ -14,6 +14,7 @@ ParticleGenerator::ParticleGenerator(std::string name, Particle* p, int n,
 	_currentTime = 0;
 }
 
+
 ParticleGenerator::~ParticleGenerator()
 {
 }
