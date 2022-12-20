@@ -13,7 +13,6 @@ public:
 	virtual void updateForce(Particle* particle, double t);
 	virtual void updateForceDynamics(physx::PxRigidDynamic* rigid, double t);
 
-
 	inline void setDrag(float k1, float k2) { _k1 = k1; _k2 = k2; };
 
 	inline float getK1() { return (_k1); };

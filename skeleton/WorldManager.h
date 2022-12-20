@@ -8,6 +8,10 @@
 #include "GaussianRigidGenerator.h"
 
 #include "Explosion.h"
+#include "DragGenerator.h"
+
+
+
 
 using namespace physx;
 
@@ -26,16 +30,19 @@ public:
 
 	//void changeAct() { exPrueba->activate(); };
 	void addForce(std::list<PxRigidDynamic*> objectsD, bool insert);
+	void addForce2(std::list<pair<PxRigidDynamic*, bool>> objectsD, bool insert);
 
 	PxRigidDynamic* createPlayer(Player* p);
 
 	void createUniform();
 	void createGaussian();
-	void activeDrag(float t);
 
 	void createMap();
 	void createBombs();
 
+	void createFinal();
+
+	bool finishGame() { return finish; };
 
 protected:
 
@@ -44,33 +51,32 @@ protected:
 
 	std::list<PxRigidDynamic*> _objects;
 
-	std::list<PxRigidDynamic*> _bombs;
+	std::list<pair<PxRigidDynamic*, bool>> _bombs;
 
 	std::list<RenderItem*> _renderItems;
 	RenderItem* item;
+	RenderItem* itemblue;
 	PxPhysics* gPhysics;
 	PxScene* gScene;
 
 	PxRigidDynamic* object;
+	PxRigidStatic* final;
 
 	Vector3 vel = { 0, 10, -10 };
 	Vector3 size = { 3, 3, 3 };
 
-
 	DynamicsForceRegistry* dfr;
 	Explosion* exPrueba;
-	//DragGenerator* dragPrueba;
+	DragGenerator* dragPrueba;
 	//UniformWindGenerator* wind_;
 
 	UniformRigidGenerator* uniform;
 	GaussianRigidGenerator* gaussian;
 
-	double currentTime;
-	double tSpwan;
-	double lSpawn;
-
-	bool drag = false;
-
 	Player* player_;
+
+	bool apagar = true;
+	bool finish = false;
+
 };
 

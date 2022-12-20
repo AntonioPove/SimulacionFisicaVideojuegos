@@ -53,6 +53,7 @@ GaussianParticleGenerator* pg;
 WorldManager* wm;
 
 Player* player;
+bool actFire = false;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -83,12 +84,14 @@ void initPhysics(bool interactive)
 	wm = new WorldManager(gPhysics, gScene);
 	wm->createMap();
 	wm->createBombs();
+	wm->createFinal();
 
 	ps->generaFoso();
 	ps->generaWaterFall();
 
-	player = new Player(wm);
 
+	player = new Player(wm, ps);
+	
 	}
 
 
@@ -104,8 +107,9 @@ void stepPhysics(bool interactive, double t)
 
 	ps->update(t);
 	wm->update(t);
+	player->updatePlayer(t);
 
-	//ps->generaFuegos(t);
+	ps->generaFuegos(t);
 }
 
 // Function to clean data

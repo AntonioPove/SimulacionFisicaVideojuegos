@@ -1,73 +1,88 @@
 #include "Player.h"
+#include <iostream>
 
-Player::Player(WorldManager* wm)
+Player::Player(WorldManager* wm, ParticleSystem* ps)
 {
 	player_ = wm->createPlayer(this);
-	vel_ = 50;
-	velJump_ = 30;
+	vel_ = 400;
 
 	sizePlayer = 10;
-	sizeEnemies = 30;
+	sizeEnemies = 20;
 }
 
 void Player::updatePlayer(double t)
 {
-	//wm_->update(t);
+	
+
 }
 
 void Player::inputPlayer(char key)
 {
+	Vector3 vel = { 0,0,0 };
+
 	switch (toupper(key))
 	{
 	case 'A':
 	{
-		player_->setAngularVelocity({ 0, 0, -vel_ });
-		player_->setLinearVelocity({ 0, 0, -vel_ });
+		vel -= {0, 0, 1};
 		break;
 	}
 	case 'S':
 	{
-		player_->setAngularVelocity({ -vel_, 0, 0 });
-		player_->setLinearVelocity({ -vel_, 0, 0 });
+		vel -= {1, 0, 0};
 		break;
 	}
 	case 'D':
 	{
-		player_->setAngularVelocity({ 0, 0, vel_ });
-		player_->setLinearVelocity({ 0, 0, vel_ });
+		vel += {0, 0, 1};
 		break;
 	}
 	case 'W':
 	{
-		player_->setAngularVelocity({ vel_, 0, 0 });
-		player_->setLinearVelocity({ vel_, 0, 0 });
+		vel += {1, 0, 0};
 		break;
 	}
 	default:
 		break;
 	}
 
+	player_->addForce(vel * vel_);
 
 }
 
-bool Player::collision(std::list<PxRigidDynamic*> bombs)
+void Player::moveInicial()
 {
-	for (auto e : bombs)
-	{
-		if (abs(e->getGlobalPose().p.x - player_->getGlobalPose().p.x) > sizeEnemies + sizePlayer
-			|| abs(e->getGlobalPose().p.y - player_->getGlobalPose().p.y) > sizeEnemies + sizePlayer ||
-			abs(e->getGlobalPose().p.z - player_->getGlobalPose().p.z) > sizeEnemies + sizePlayer)
-			return false;
-
-		float dx = e->getGlobalPose().p.x - player_->getGlobalPose().p.x;
-		float dy = e->getGlobalPose().p.y - player_->getGlobalPose().p.y;
-		float dz = e->getGlobalPose().p.z - player_->getGlobalPose().p.z;
-		float distance = sqrt(dx * dx + dy * dy + dz * dz);
-
-		return distance < (sizePlayer + sizeEnemies);
-
-
-
-	}
+	player_->setGlobalPose(PxTransform({ 120, 10, 180 }));
+	player_->setLinearVelocity({ 0,0,0 });
+	player_->setAngularVelocity({ 0, 0, 0 });
 }
 
+bool Player::collision(PxTransform bombs)
+{
+	if (abs(bombs.p.x - player_->getGlobalPose().p.x) > sizeEnemies + sizePlayer
+		|| abs(bombs.p.y - player_->getGlobalPose().p.y) > sizeEnemies + sizePlayer ||
+		abs(bombs.p.z - player_->getGlobalPose().p.z) > sizeEnemies + sizePlayer)
+		return false;
+
+	float dx = bombs.p.x - player_->getGlobalPose().p.x;
+	float dy = bombs.p.y - player_->getGlobalPose().p.y;
+	float dz = bombs.p.z - player_->getGlobalPose().p.z;
+	float distance = sqrt(dx * dx + dy * dy + dz * dz);
+
+	return distance < (sizePlayer + sizeEnemies);
+}
+
+bool Player::final(PxTransform final)
+{
+	if (abs(final.p.x - player_->getGlobalPose().p.x) > sizeEnemies + sizePlayer
+		|| abs(final.p.y - player_->getGlobalPose().p.y) > sizeEnemies + sizePlayer ||
+		abs(final.p.z - player_->getGlobalPose().p.z) > sizeEnemies + sizePlayer)
+		return false;
+
+	float dx = fabs(player_->getGlobalPose().p.x - final.p.x);
+	float dy = fabs(player_->getGlobalPose().p.y - final.p.y);
+	float dz = fabs(player_->getGlobalPose().p.z - final.p.z);
+	float distance = sqrt(dx * dx + dy * dy + dz * dz);
+
+	return distance < sizePlayer + 40;
+}

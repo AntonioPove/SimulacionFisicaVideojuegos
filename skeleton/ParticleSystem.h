@@ -54,7 +54,6 @@ public:
 	void generaFoso();
 	void generaWaterFall();
 
-
 protected:
 
 	std::list<ParticleGenerator*> _particles_generator;
