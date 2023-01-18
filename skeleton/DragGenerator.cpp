@@ -10,7 +10,7 @@ DragGenerator::DragGenerator(const float k1, const float k2) : ForceGenerator()
 	_k1 = k1;
 	_k2 = k2;
 
-	_wind = { -3, 0 , 0 };
+	_wind = { -1, 0 , 0 };
 }
 
 void DragGenerator::updateForce(Particle* particle, double t)
@@ -41,10 +41,10 @@ void DragGenerator::updateForceDynamics(physx::PxRigidDynamic* rigid, double t)
 	dragF = -v * drag_coef;
 
 
-	std::cout << dragF.x << " ";
-	std::cout << dragF.y << " ";
-	std::cout << dragF.z;
-	std::cout << std::endl;
+	//std::cout << dragF.x << " ";
+	//std::cout << dragF.y << " ";
+	//std::cout << dragF.z;
+	//std::cout << std::endl;
 
 	rigid->addForce(dragF);
 

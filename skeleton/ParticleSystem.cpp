@@ -9,7 +9,7 @@ ParticleSystem::ParticleSystem()
 	//Particulas gausiano/uniforme y firework
 	fountainParticle = new Particle({ 0 ,0, 0 }, { 10, -10, 10 }, 2, { 0, -2, 0 }, 0.99, 5, { 0.5, 1, 1 });
 	fountainParticle1 = new Particle({ 0 ,0, 0 }, { 0, 100, 0 }, 0.8, { 0, -2, 0 }, 0.99, 5, { 0, 1, 1 });
-	fireworkP = new Particle({ 150, 0 ,-150 }, { 30, 100, 30 }, 3, { 0, 2, 0 }, 0.99, 40, { 1, 1, 0.5 });
+	fireworkP = new Particle({ 150, 0 ,-150 }, { 30, 100, 30 }, 3, { 0, 2, 0 }, 0.99, 3, { 1, 1, 0.5 });
 
 
 	//Desviaciones
@@ -39,7 +39,7 @@ void ParticleSystem::update(double t)
 		if (!(*i)->integrate(t)) {
 			if (auto f = dynamic_cast<Firework*>((*i)))
 			{
-				std::cout << "exploto";
+				//std::cout << "exploto";
 				auto newsP = f->explode();
 
 				for (auto n : newsP)
@@ -310,12 +310,17 @@ void ParticleSystem::generaFoso()
 {
 	Particle* p = new Particle({ -400 , 0, 0 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.99, 100, { 0, 1, 0 }, 2, {50, 20, 20});
 	_particles.push_back(p);
+	p->setMass(20);
 	p->setVolumen(50 * 20 * 20);
 	Particle* p1 = new Particle({ 0 , 0, 400 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.99, 100, { 0, 1, 0.2 }, 2, { 60, 20, 20 });
 	_particles.push_back(p1);
+	p->setMass(1);
+
 	p1->setVolumen(60  * 20 * 20);
 	Particle* p2 = new Particle({ 300 , 0, 40 }, { 0, 0, 0 }, 2, { 0, 0, 0 }, 0.99, 100, { 0, 1, 0 }, 2, { 30, 20, 60 });
 	_particles.push_back(p2);
+	p->setMass(50);
+
 	p2->setVolumen(30 * 20 * 60);
 
 
